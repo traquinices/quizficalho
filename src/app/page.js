@@ -277,9 +277,8 @@ function PerguntaScreen({ pergunta, indice, total, onResponder }) {
 
 function Resultado({ pontos, onReiniciar }) {
   const ranking = Object.entries(pontos).sort((a, b) => b[1] - a[1]);
-  const [vencedor, pontosVencedor] = ranking[0];
+  const [vencedor] = ranking[0];
   const info = DESCRICOES[vencedor];
-  const maxPontos = pontosVencedor || 1;
 
   return (
     <motion.div
@@ -300,13 +299,13 @@ function Resultado({ pontos, onReiniciar }) {
         className="relative inline-block mb-6"
       >
         <div
-          className={`absolute inset-0 rounded-full bg-gradient-to-r ${info.cor} blur-2xl opacity-60`}
+          className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${info.cor} blur-2xl opacity-60`}
         />
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={info.imagem}
           alt={vencedor}
-          className={`relative w-40 h-40 md:w-48 md:h-48 rounded-full object-cover border-4 border-white/10 shadow-2xl bg-gradient-to-br ${info.cor}`}
+          className={`relative w-56 h-56 md:w-72 md:h-72 rounded-2xl object-contain border-4 border-white/10 shadow-2xl bg-slate-900`}
         />
       </motion.div>
 
@@ -320,39 +319,6 @@ function Resultado({ pontos, onReiniciar }) {
       <p className="text-slate-200 mb-10 max-w-lg mx-auto leading-relaxed">
         {info.descricao}
       </p>
-
-      <div className="bg-slate-900/60 rounded-2xl p-5 mb-8 border border-slate-700/60 text-left">
-        <p className="text-xs uppercase tracking-widest text-slate-500 mb-3">
-          Ranking completo
-        </p>
-        <div className="space-y-2">
-          {ranking.map(([p, v], i) => (
-            <div key={p} className="flex items-center gap-3">
-              <span className="w-6 text-slate-500 text-sm font-mono">
-                {i + 1}º
-              </span>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={DESCRICOES[p].imagem}
-                alt={p}
-                className="w-8 h-8 rounded-full object-cover border border-slate-700"
-              />
-              <span className="w-20 font-semibold">{p}</span>
-              <div className="flex-1 h-2.5 bg-slate-800 rounded-full overflow-hidden">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: `${(v / maxPontos) * 100}%` }}
-                  transition={{ duration: 0.6, delay: 0.3 + i * 0.05 }}
-                  className={`h-full bg-gradient-to-r ${DESCRICOES[p].cor}`}
-                />
-              </div>
-              <span className="w-8 text-right text-slate-400 text-sm font-mono">
-                {v}
-              </span>
-            </div>
-          ))}
-        </div>
-      </div>
 
       <motion.button
         whileHover={{ scale: 1.05 }}
